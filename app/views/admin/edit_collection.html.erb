@@ -1,0 +1,62 @@
+<%- content_for :main_canvas do %>
+  <h2><%= @collection.new_record? ? "Create New Collection" : "Edit "+@collection.name%> </h2>
+
+  <p>
+  <h5><%= @collection.ismaster? ? "Edit details or create a new sub category" : "Set the required details."%></h5>
+
+  </p>
+      <%- unless @collection.errors.blank? %>
+      <p class="errors">
+        <%- @collection.errors.each do |e|%>
+          <%= "Error on "+  e.first.gsub("_","  ")%>. <%= e.last%> <br />
+        <%- end -%>
+      </p>
+      <%- end %>
+
+  <%- if (not @master_collection.blank?) -%>
+    <p>
+      <strong>Master collection: </strong><%= link_to @master_collection.name, admin_edit_collection_path(@master_collection), :title=>"View master collection" %>
+    </p>
+  <%- end %>
+
+  <fieldset>
+    <legend>Enter the details required for the collection.</legend>
+  <%- form_for @collection, :url => admin_update_collection_path, :html => {:method=>:post} do |f| %>
+    <%= hidden_field_tag "collection_id", @collection.id %>
+    <%- if not @master_collection.blank?%>
+      <%= hidden_field_tag "collection[master_collection]",  @master_collection.id %>
+     <%- end %>
+    <div>
+      <%= f.label :name %>
+    </div>
+    <div>
+      <%= f.text_field :name, :size=>42 %>
+    </div>
+
+    <div>
+      <%= f.label :description %>
+     </div>
+    <div>
+      <%= f.text_area :description, :rows => 4 %>
+    </div>
+    <fieldset>
+      <legend>Show on site?</legend>
+      <div>
+       <%= f.check_box :show_on_site %>
+      </div>
+    </fieldset>
+    <%= f.submit "Submit", :class=>"formbutton" %>
+    <% end %>
+  </fieldset>
+
+      <%- if @collection.ismaster? %>
+        <h4>Sub Categories</h4>
+
+        <%= render :partial => "admin/collection_listing", :locals => {:collections => @collection.children} %>
+
+        <p>
+           <%= link_to "Create new 'sub category'", admin_create_child_category_path(@collection), :title=>"Create a new 'sub category'" %>
+        </p>
+
+      <%- end %>
+<%- end %>

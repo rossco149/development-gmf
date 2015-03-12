@@ -1,0 +1,40 @@
+<h2><%= @collection.name.upcase %></h2>
+
+  <p>
+  <h5><%=@collection.description%></h5>
+
+  <h5>Below are some of our <%= @collection.display_name %>.</h5>
+  </p>
+
+  <hr />
+
+  <%- if products.blank? %>
+    <p>We are sorry, there are currently no <%= @collection.name.pluralize %> available at present.</p>
+  <%- else %>
+
+
+    <table>
+          <%- products.each_with_index do |prod, index|%>
+
+          <%=  "<tr>" if (index % 3) == 0 %>
+
+            <td>
+              <%- fp = prod%>
+              <%- if not show_products%>
+                <%- pr = fp.products.first%>
+                <%- if not pr.blank?%>
+                  <% fp = pr %>
+                <%- end%>
+              <%- end%>
+              <%-unless fp.class.name=="Collection"%>
+                <%= link_to image_tag(fp.image.url(:small)), show_products ? gallery_show_path(prod) : gallery_type_path(prod), :title=>"#{prod.name}. Description: #{prod.description}"%>
+             <%- end%>
+                
+              <p><a title="<%=prod.description %>">More: <%=link_to prod.name,show_products ? gallery_show_path(prod) : gallery_type_path(prod) %></a> </p>
+            </td>
+
+          <%=  "</tr>" if (index % 3) == 2  or index == products.length %>
+
+        <%- end%>
+    </table>
+ <%- end%>

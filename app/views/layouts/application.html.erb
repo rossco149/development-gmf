@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta content="<%= "George McAlpine: #{@description}"%>" name="description"/>
+<meta content="fireplace, stove, granite, marble" name="keywords" />
+<title><%="George McAlpine. #{@page_title.capitalize}" %> </title>
+<%= stylesheet_link_tag "styles",  "jquery.lightbox-0.5.css", "rotator_style.css"%>
+<%=javascript_include_tag "jquery-1.4.3.min.js", "application.js", "jquery.lightbox-0.5.min.js", "bannerRotator.js" %>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAc6NTntVf1JmcPaZrC-RVhMiO7KZ9ELc&sensor=false"></script>
+
+</head>
+<body>
+<div id="wrapper">
+
+  <div id="top" class="clear">
+    <h1><%= link_to "George&nbsp;McAlpine", root_path, :title=>"Home"%>Established 1890</h1>
+    <%= render :partial=>"site/top_navigation" %>
+  </div>
+
+  <div id="body" class="clear">
+    <div id="sidebar" class="column-left">
+       <%= render :partial => "site/left_navigation" %>
+    </div>
+    <div id="content" class="column-right">
+      <%= yield :main_canvas %>
+    </div>
+    <div class="clearing"></div>
+
+  </div>
+
+<div class="clearing"></div>
+<div id="footer" class="clear">
+  <div class="footer-box">
+    <h4>About us</h4>
+    <p>
+        Since 1890 George McAlpine has been a family business crafting and installing fireplaces for both builder and public alike. In this time we have established an excellent reputation for our high standard of workmanship.
+    </p>
+  </div>
+  <%= render :partial=>"site/footer" %>
+ </div>
+</div>
+</body>
+</html>

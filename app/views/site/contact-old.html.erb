@@ -1,0 +1,109 @@
+<%- content_for :main_canvas do %>
+
+<%= hidden_field_tag "show", @show%>
+<h2>Contact Us</h2>
+<p><%= flash[:notice] %> </p>
+<p><h5>Please select which method you wish to contact us by.</h5></p>
+<ul>
+    <li><a href="#map" id="map_show">By visiting our showroom or calling us...</a></li>
+    <li><a href="#form" id="form_show">By completing our contact form...</a></li>
+</ul>
+
+
+<div id="map-canvas" />
+<div id="map">
+  <!-- <a name="map"/> -->
+
+    <h4>George McAlpine Ltd</h4>
+    90 Seaward St<br />
+    Glasgow<br />
+    G41 1HJ<br />
+    <h4>Telephone: 0141 420 1392<br />Fax: 0141 420 3906</h4>
+    <div class="clear "></div>
+    <%= image_tag "map_location.bmp", :alt=>"location map", :title=>"location map" %>
+</div>
+
+<div id="form">
+   <!-- <a name="form" /> -->
+      <%- unless @contact.errors.blank? %>
+      <p class="errors">
+        <%- @contact.errors.each do |e|%>
+          <%= e.first.gsub("_"," ")%> <%= e.last%> <br />
+        <%- end -%>
+      </p>
+      <%- end %>
+  <fieldset>
+    <legend>Enter your enquiry details and we will respond to you as soon as possible.</legend>
+  <%- form_for @contact, :url => contact_path, :html => {:method=>:post} do |f| %>
+
+    <div>
+      <%= f.label :name %>
+    </div>
+    <div>
+      <%= f.text_field :name, :size=>42 %>
+    </div>
+
+    <div>
+      <%= f.label :address %>
+     </div>
+    <div>
+      <%= f.text_area :address, :rows => 4 %>
+    </div>
+
+    <div>
+      <%= f.label :enquiry %>
+     </div>
+    <div>
+      <%= f.text_area :enquiry, :rows => 4 %>
+    </div>
+
+    <div>
+      <%= f.label :phone %>
+    </div>
+    <div>
+      <%= f.text_field :phone, :size=>42 %>
+    </div>
+
+    <div>
+      <%= f.label :email %>
+    </div>
+    <div>
+      <%= f.text_field :email, :size=>42 %>
+    </div>
+
+    <%- if @product%>
+      <%= hidden_field_tag "contact[fire_type]", "#{@product.collections.first.display_name.upcase}: #{@product.name}" %>
+      <fieldset>
+      <legend>Product</legend>
+      <p>
+        <strong><%= @product.name%> </strong>
+      </p>
+      </fieldset>
+
+    <%-end%>
+
+    <fieldset>
+        <legend>Prefered callback method</legend>
+        <div>
+          Email:<input type="radio" name="contact[callback_method]" <%="checked='checked'" if @contact.callback_method=="Email"%> value="Email" />
+          Phone:<input type="radio" value="Phone" name="contact[callback_method]" <%="checked='checked'" if @contact.callback_method=="Phone"%> />
+        </div>
+    </fieldset>
+
+    <%- textcaptcha_fields(f) do %>
+      <fieldset>
+        <legend>Please complete the following question, used to detect SPAM.</legend>
+        <div>
+         <%= f.label :textcaptcha_answer, @contact.textcaptcha_question %><br/>
+         <%= f.text_field :textcaptcha_answer, :value => '' %>
+        </div>
+      </fieldset>
+    <% end %>
+
+    <%= f.submit "Submit", :class=>"formbutton" %>
+    <% end %>
+  </fieldset>
+
+</div>
+
+<%- end %>

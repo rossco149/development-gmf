@@ -1,0 +1,8 @@
+<%- if @featured.length > 0%>
+  <h4>Featured Products</h4>
+  <ul>
+          <%-@featured.each do |fp|%>
+          <li><%= link_to fp.name, gallery_show_path(fp.id), :title => fp.description%> </li>
+        <%- end%>
+  </ul>
+ <%-end %>

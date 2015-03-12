@@ -1,0 +1,16 @@
+/*---------- YOU CAN CHANGE THIS STUFF -----------*/
+#bannerRotator { width:670px; height:265px;}
+#bannerRotator ul li img{ width:330px; max-height:265px; }
+
+
+/*---------- YOU MIGHT BREAK IT IF YOU CHANGE THIS STUFF -----------*/
+#bannerRotator { position:relative; }
+#bannerRotator ul { list-style:none; padding:0; position:relative; margin:0; }
+#bannerRotator ul li { display:none; position:absolute; }
+#bannerRotator ul li a { text-decoration:none; }
+
+#bannerNav {   position:absolute; right:15px; bottom:15px; background:url(/images/rotator_images/transBlack75.png) repeat 0 0; padding:5px 5px 5px 10px; -moz-border-radius:5px; -webkit-border-radius:5px; }
+#bannerNav a { margin:3px 10px 0 0; height:10px; width:10px; display:block; background:url(/images/rotator_images/dotDark.png) no-repeat 0 0; float:left; }
+#bannerNav a.active { background-image:url(/images/rotator_images/dotLight.png); }
+#bannerNav span.pause, #bannerNav span.play { cursor:pointer; height:15px; width:15px; display:block; background:url(/images/rotator_images/pause.png) no-repeat 0 0; float:left; }
+#bannerNav span.play { background-image:url(/images/rotator_images/play.png) }

@@ -1,0 +1,60 @@
+<%- content_for :main_canvas do %>
+  <h2><%= @banner.new_record? ? "Create New Banner" : "Edit "+@banner.name%> </h2>
+
+  <p>
+  <h5>Set the required details.</h5>
+  </p>
+
+    <p>
+    <%- unless @banner.new_record?%>
+        <div>
+          <%= link_to "Delete this banner", admin_delete_banner_path(@banner), :title=>"Delete banner", :confirm=>"Are you sure you want to delete this banner?" %>
+        </div>
+      <%- end%>
+    </p>
+
+       <%- unless @banner.errors.blank? %>
+      <p class="errors">
+        <%- @banner.errors.each do |e|%>
+          <%= e.first.gsub("_","  ")%> <%= e.last%> <br />
+        <%- end -%>
+      </p>
+      <%- end %>
+
+  <fieldset>
+    <legend>Enter the details required for this banner.</legend>
+  <%- form_for @banner, :url => admin_update_banner_path, :html => {:multipart => true, :method=>:post} do |f| %>
+    <%= hidden_field_tag "banner_id", @banner.id %>
+    <div>
+      <%= f.label :name %>
+    </div>
+    <div>
+      <%= f.text_field :name, :size=>42 %>
+    </div>
+
+    <div>
+      <%= f.label :description %>
+     </div>
+    <div>
+      <%= f.text_area :description, :rows => 4 %>
+    </div>
+
+    <fieldset>
+      <legend>Update banner image?</legend>
+    </fieldset>
+    <div>
+        <%= f.file_field :image %>
+        <%= image_tag @banner.image.url(:banner), :class=>"thumbImage", :title=>@banner.name unless @banner.image.url.include?"missing.png"%>
+
+    </div>
+    <fieldset>
+      <legend>Show on site?</legend>
+    </fieldset>
+    <div>
+      <%= f.check_box :show_on_site %>
+    </div>
+
+    <%= f.submit "Submit", :class=>"formbutton" %>
+    <% end %>
+  </fieldset>
+<%- end %>

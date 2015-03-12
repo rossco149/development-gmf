@@ -1,0 +1,51 @@
+<%- content_for :main_canvas do %>
+
+  <h2>George McAlpine Fireplaces</h2>
+  <div id="no_js">
+    <%= image_tag "banner.jpg", :width=> "675", :height => "267", :alt => "Wall mounted fireplace", :title=>"Wall mounted fireplace"%>
+  </div>
+    <div id="bannerRotator" class="with_js">
+        <ul>
+          <%- if @banners.length > 0%>
+            <%- @banners.each do |banner|%>
+            <li>
+              <%= image_tag banner.image.url(:banner), :style=>"float:left;", :alt => "#{banner.description}", :title=>"#{banner.description}"%>
+               <!-- <div class="home_banners"><strong><%= banner.description  %></strong></div> -->
+            </li>
+            <%- end%>
+            <div class="home_banners"><h4>Since 1890, George McAlpine has been a family business crafting and installing fireplaces. During this time, we have established an excellent reputation for our high standard of workmanship. </h4></div>
+
+          <%- else%>
+            <li>
+               <%= image_tag "banner.jpg", :width=> "675", :height => "267", :alt => "Wall mounted fireplace", :title=>"Wall mounted fireplace"%>
+            </li>
+          <%- end%>
+        </ul>
+      </div>
+  <div id="content">
+      <!--
+      <p>
+        <h5>Since 1890, George McAlpine has been a family business crafting and installing fireplaces.
+            During this time, we have established an excellent reputation for our high standard of workmanship.
+        </h5>
+      </p>
+      -->
+      <p>
+      <h5>
+        Within our showroom we have an extensive selection of marble, sandstone, limestone, slate, granite, wood, cast iron and hole in the wall unit fireplaces, ranging from traditional to contemporary styles and offered in a wide choice of finishes and sizes.
+      </h5>
+      </p>
+      <p>
+        We also offer a range of solid fuel, gas and electric fires as well as gas, electric, multifuel and woodburning stoves.
+      </p>
+      <p>
+        In addition, we offer a bespoke service where we can customise a fireplace to your requirements.
+      </p>
+
+      <p>
+        Call in and see our <%= link_to "Seaward Street showroom.", contact_path(:show=>"map"), :title=>"visit our showroom"%>
+      </p>
+      <h3>George McAlpine:</h3>
+      <h4>a name synonymous with quality.</h4>
+    </div>
+<%end%>

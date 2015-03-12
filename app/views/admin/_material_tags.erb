@@ -1,0 +1,8 @@
+<fieldset>
+  <legend>Available Materials</legend>
+    <div>
+      <%- Product::MATERIAL_IDS.keys.sort.each do |material| %>
+        <%= material%> <input type="checkbox" <%= "checked='checked'" if @product.available_materials.include? material%> value=<%=material%> name="product[available_materials][]" id="product_available_materials" />
+      <%- end%>
+      </div>
+</fieldset>

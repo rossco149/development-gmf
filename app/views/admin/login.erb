@@ -1,0 +1,26 @@
+<%- content_for :main_canvas do %>
+  <h2>Admin login</h2>
+
+  <p>
+  <h5>Enter your username and password to be directed to the admin area.</h5>
+  </p>
+  <p><%= flash[:error]%> </p>
+  <fieldset>
+    <legend>User details</legend>
+  <%- form_for @user, :url => admin_login_path do |f| %>
+    <p>
+      <%= f.label :username %>
+      <%= f.text_field :username, :size=>42 %>
+    </p>
+
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password, :size => 42 %>
+    </p>
+
+    <%= submit_tag "login", :class=>"formbutton" %>
+  <% end %>
+  </fieldset>
+
+<%- end %>
+

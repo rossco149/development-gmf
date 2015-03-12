@@ -1,0 +1,40 @@
+<%- content_for :main_canvas do %>
+
+<%- if @product.blank?%>
+<p>Sorry, this product is not availble to view online</p>
+<%- else%>
+  <h2><%= @product.name.upcase%> </h2>
+
+  <div class="gallery_detail">
+    <%= link_to image_tag(@product.image.url(:medium)),@product.image.url(:large), :title=>"#{@product.name}. Description: #{@product.description}", :class=>"popup2"%>
+  <div class="gallery_detail_links">
+    <%=link_to "View large image",@product.image.url(:large) , :title=>"#{@product.name}.   #{@product.description}", :class=>"popup large"%>
+    <%= link_to "Request more information >>", contact_product_path(@product, :show=>"form"), :title=>"Request more information", :class=>"more" %>
+  
+  </div>
+    
+</div>
+
+  <table class="gallery_detail">
+    <tbody><tr>
+      <th>Description</th>
+      <th>Available Materials</th>
+    </tr>
+    <tr>
+      <td><%=@product.description %></td>
+      <%- if @product.available_materials.strip() != '' %>
+        <td><%=  @product.available_materials %></td>
+      <%- else %>
+      <td><%=  link_to "Request more information >>", contact_product_path(@product, :show=>"form") %></td>
+      <%- end %>
+    </tr>
+    <tr>
+      <td colspan="2">
+       <%= link_to "<< View #{@product.collections.first.display_name}","#{gallery_type_path(@product.collections.first)}" %>
+      </td>
+    </tr>
+  </tbody></table>
+
+<%- end%>
+
+<%- end%>

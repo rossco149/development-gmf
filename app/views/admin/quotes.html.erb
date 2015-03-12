@@ -1,0 +1,30 @@
+<%- content_for :main_canvas do %>
+  <h2>Quotes</h2>
+  
+  <%- unless flash[:notice].blank?%>
+  <p class="errors">
+        <%= flash[:notice] %>
+  </p>
+  <%-end%>
+  <p>
+  <h5>Using the options below you can create, edit and delete quotes that are shown on the main site.</h5>
+  </p>
+
+    <ul>
+      <li>
+        <%= link_to "Create new quote", admin_edit_quote_path, :title=>"Create a new quote" %>
+      </li>
+    </ul>
+
+  <p>Filter by type: <%= select_tag "quote_filter", options_for_select(["All","trade","private"]), :path=>admin_quotes_path%> </p>
+  <ul id="quotes">
+  <%- Quote.all.each do |q|%>
+  
+      <li class='<%=  q.quote_type %>'>
+        <%= link_to q.customer_name, admin_edit_quote_path(:id =>q), :title=>"View #{q.customer_name}"%></p>
+      </li>
+      
+  <%- end%>
+  </ul>
+
+<%- end %>

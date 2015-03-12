@@ -1,0 +1,25 @@
+<div id="remove_filter">
+  <h4><%= @collection.blank? ? "Viewing all products" : "Viewing "+@collection.display_name %> </h4>
+  <%= link_to "Remove filter",admin_products_path%>
+
+</div>
+
+<%- if fireplaces.blank?%>
+<p>No products to show.</p>
+
+<%- else%>
+  <table>
+  <%- fireplaces.each_with_index do |fp, index|%>
+
+    <%=  "<tr>" if (index % 3) == 0 %>
+
+      <td>
+        <%= link_to image_tag(fp.image.url(:small)), admin_edit_fireplace_path(:id => fp), :title=>"Edit #{fp.name}"%>
+        <p><%= link_to fp.name, admin_edit_fireplace_path(:id => fp), :title=>"Edit #{fp.name}"%> </p>
+      </td>
+
+    <%=  "</tr>" if (index % 3) == 2  or index == Product.all.length %>
+
+  <%- end%>
+  </table>
+<%- end%>

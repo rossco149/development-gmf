@@ -1,0 +1,20 @@
+<fieldset>
+  <legend>Site sections</legend>
+
+  <div>
+    <%- @collection_hash.keys.each do |master| %>
+      <table>
+        <tr>
+          <td colspan="3"><h4><%=master.name %><br /> <input type="checkbox" <%= "checked='checked'" if @product.collections.include? master%> value=<%=master.id%> name="product[collections][]" id="product_collections" /></h4></td>
+        </tr>
+          <%- @collection_hash[master].each_with_index do |collection, index|%>
+            <%=  "<tr>" if (index % 3) == 0 %>
+            <td>
+              <%= collection.name%><br /> <input type="checkbox" <%= "checked='checked'" if @product.collections.include? collection%> value=<%=collection.id%> name="product[collections][]" id="product_collections" />
+            </td>
+            <%=  "</tr>" if (index % 3) == 2  or index == @collection_hash[master].length %>
+          <%-end%>
+      </table>
+    <%- end%>
+    </div>
+</fieldset>

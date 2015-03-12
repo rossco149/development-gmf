@@ -1,0 +1,25 @@
+<%- if banners.blank?%>
+<p>No banners to show.</p>
+
+<%- else%>
+  <table>
+  <%- banners.each do |banner|%>
+
+    <tr>
+
+      <td>
+        <%= link_to image_tag(banner.image.url(:banner)), admin_edit_banner_path(:id => banner), :title=>"Edit #{banner.name}"%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= link_to banner.name, admin_edit_banner_path(:id => banner), :title=>"Edit #{banner.name}"%>
+      </td>
+      <td>
+          <strong><%= banner.show_on_site ? "Active" : "Not Active"%></strong>
+      </td>
+    </tr>
+
+  <%- end%>
+  </table>
+<%- end%>

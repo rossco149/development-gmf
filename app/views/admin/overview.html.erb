@@ -1,0 +1,16 @@
+<%- content_for :main_canvas do %>
+  <h2>Collections</h2>
+
+  <p>
+  <h5>Using the options below you can create, edit and delete collections that are shown on the main site.</h5>
+  </p>
+
+  <div id="collection_list">
+    <ul>
+      <li>
+        <%= link_to "Create new 'collection'", admin_edit_collection_path, :title=>"Create a new 'collection'" %>
+      </li>
+    </ul>
+    <%= render :partial => "admin/collection_listing", :locals => {:collections => @collections} %>
+  </div>
+<%- end %>

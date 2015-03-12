@@ -1,0 +1,4 @@
+<%- content_for :main_canvas do %>
+  <%= render :partial=>"product_list", :locals=>{:products=>@collection.children.on_site(true), :show_products=>false} %>
+
+<%- end %>

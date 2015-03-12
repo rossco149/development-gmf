@@ -1,0 +1,29 @@
+<div class="footer-box">
+
+        <h4>Our Range</h4>
+        <ul>
+          <%- Collection.masters.on_site(true).with_children().uniq.each do |k|%>
+              <li><%= link_to k.name.capitalize, gallery_type_path(k), :title=>"View #{k.name} products"%> </li>
+              <%- end%>
+        </ul>
+</div>
+
+<div class="footer-box">
+        <%= render :partial=>"featured_products" %>
+</div>
+
+<div class="footer-box end-footer-box">
+        <h4>Find Us</h4>
+        <ul>
+                <li><%= link_to "Contact us", contact_path(:show=>"form"), :title=>"View contact form"%> </li>
+                <li><%= link_to "Visit us", contact_path(:show=>"map"), :title=>"View location map"%></li>
+                <li><p>Telephone: 0141 420 1392</p></li>
+                <li><p>Fax: 0141 420 3906</p></li>
+        </ul>
+</div>
+<div class="clearing"></div>
+<div id="footer-links">
+  <p>
+      &copy; <%= Date.today.year%>  George Macalpine.
+  </p>
+</div>

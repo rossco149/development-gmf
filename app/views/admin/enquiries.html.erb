@@ -1,0 +1,26 @@
+<%- content_for :main_canvas do %>
+  <h2><%= @enquiry.blank? ? "Enquiries" : "Enquiry"%> </h2>
+  <%- unless flash[:notice].blank?%>
+  <p class="errors">
+        <%= flash[:notice] %>
+  </p>
+  <%-end%>
+  <p>
+  <h5>New Customer Enquiries.</h5>
+  </p>
+  <ul>
+    <%- @new_enquiries.each do |e|%>
+    <li><%= link_to  e.name, admin_enquiries_show_path(e), :title=>"View #{e.name} enquiry"%> recieved at <%= e.created.strftime("%d-%m-%Y at %T") %></li>
+    <%- end%>
+  </ul>
+  <hr />
+  <p>
+  <h5>Viewed Customer Enquiries.</h5>
+  </p>
+  <ul>
+    <%- @old_enquiries.each do |e|%>
+    <li><%= link_to e.name, admin_enquiries_show_path(e), :title=>"View #{e.name} enquiry"%> recieved at <%= e.created.strftime("%d-%m-%Y at %T") %></li>
+    <%- end%>
+  </ul>
+<%- end %>
+

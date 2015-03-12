@@ -1,0 +1,18 @@
+<%- content_for :main_canvas do %>
+  <h2>Home Banners</h2>
+
+  <p>
+  <h5>Using the options below you can create, edit and delete banners that are shown on the home page.</h5>
+  </p>
+
+  <div id="banner_list">
+    <ul>
+      <li>
+        <%= link_to "Create new banner", admin_edit_banner_path, :title=>"Create a new banner" %>
+      </li>
+    </ul>
+    
+    <%= render :partial => "admin/banner_listing", :locals => {:banners => @banners} %>
+  </div>
+
+<%- end%>

@@ -1,0 +1,6 @@
+<%- content_for :main_canvas do %>
+    <%= render :partial=>"product_list", :locals=>{:products=>@products, :show_products=>true} %>
+
+<%= will_paginate @products %>
+
+<%- end %>

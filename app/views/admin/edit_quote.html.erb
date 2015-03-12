@@ -1,0 +1,56 @@
+<%- content_for :main_canvas do %>
+  <h2><%= @quote.new_record? ? "Create new quote" : "Edit quote"%> </h2>
+
+  <p>
+  <h5>Set the required details.</h5>
+  </p>
+
+    <%- unless @quote.new_record?%>
+    <p>
+      <%= link_to "Delete this quote", admin_delete_quote_path(@quote), :title=>"Delete quote", :confirm=>"Are you sure you want to delete this quote?" %>
+    </p>
+    <%- end%>
+
+    <%- unless @quote.errors.blank? %>
+      <p class="errors">
+        <%- @quote.errors.each do |e|%>
+          <%= e.first.gsub("_"," ")%> <%= e.last%> <br />
+        <%- end -%>
+      </p>
+      <%- end %>
+  <fieldset>
+    <legend>Enter the details required for the Quote.</legend>
+  <%- form_for @quote, :url => admin_update_quote_path, :html => {:method=>:post} do |f| %>
+    <%= hidden_field_tag "quote_id", @quote.id %>
+    
+    <div>
+      Trade
+      <input type="radio" <%= "checked='checked'" if @quote.quote_type == "trade"%> value="trade" name="quote[quote_type]" id="quote_quote_type" />
+      Private
+      <input type="radio"  <%= "checked='checked'" if @quote.quote_type == "private"%> value="private" name="quote[quote_type]" id="quote_quote_type" />
+    </div>
+
+    <div>
+      <%= f.label :customer_name %>
+    </div>
+    <div>
+      <%= f.text_field :customer_name, :size=>42 %>
+    </div>
+
+    <div>
+      <%= f.label :quote_text %>
+     </div>
+    <div>
+      <%= f.text_area :quote_text, :rows => 2 %>
+    </div>
+
+    <div>
+      <%= f.label :show_on_site %>
+    </div>
+    <div>
+      <%= f.check_box :show_on_site %>
+    </div>
+    <%= f.submit "Submit", :class=>"formbutton" %>
+    <% end %>
+  </fieldset>
+<%- end %>

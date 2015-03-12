@@ -1,0 +1,26 @@
+<%- content_for :main_canvas do %>
+  <h2>View Contact Enquiry</h2>
+
+  <p>
+     <%= link_to "Delete this enquiry", admin_delete_enquiry_path(@contact), :title=>"Delete enquiry", :confirm=>"Are you sure you want to delete this enquiry?" %>
+  </p>
+
+  <p>
+  <h5>Customer enquiry recieved on <%= @contact.created.strftime("%d-%m-%Y at %T")%> </h5>
+  </p>
+
+
+  <p><strong>Enquiry by:</strong> <%= @contact.name%> </p>
+  <p><strong>Prefered method of callback: </strong><%= @contact.callback_method %></p>
+  <p>
+    <strong>Contact details: </strong><br />
+    <strong>Address: </strong><%= @contact.address %> <br />
+    <strong>Email: </strong><%= @contact.email%> <br />
+    <strong>Phone: </strong><%= @contact.phone %> <br />
+    <hr />
+    <strong>Enquiry: </strong><br />
+    <%= @contact.enquiry %><br/><br />
+    <strong>Product: </strong><%=  @contact.fire_type %>
+    
+  </p>
+  <%- end%>

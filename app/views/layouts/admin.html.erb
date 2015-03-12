@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Development - admin </title>
+<%= stylesheet_link_tag "styles" %>
+<%=javascript_include_tag "jquery-1.4.3.min.js", "application.js" %>
+</head>
+<body>
+<div id="wrapper">
+
+  <div id="top" class="clear">
+    <h1><%= link_to "George&nbsp;McAlpine", "#", :title=>"Home" %>Established 1890</h1>
+    <%= render :partial=>"admin/top_navigation" unless session[:user_id].blank?%>
+  </div>
+
+  <div id="body" class="clear">
+    <div id="sidebar" class="column-left">
+      <%- unless session[:user_id].blank?%>
+      <%- user = User.find(session[:user_id])%>
+      <ul>
+        <li>
+          <h3>Logged in as: <%= user.username %></h3>
+        </li>
+        <li>
+          <h4>Overview</h4>
+        </li>
+        <li>
+          <h5>Master Collections: <%= Collection.masters.count %></h5>
+        </li>
+        <li>
+          <h5>Products: <%= Product.count %></h5>
+        </li>
+        <li>
+          <h5>New Enquires: <%= Contact.count(:conditions => ["viewed = ?", false]) %></h5>
+        </li>
+        <li>
+          <!--<h5>Quotes: <%= Quote.count %></h5> -->
+        </li>
+        <%-  unless user.last_login.blank? %>
+        <li>
+          <h5>Last login session:</h5>
+          <%= user.last_login.strftime("%d-%m-%Y at %T") %>
+          <br />
+        </li>
+        <%- end%>
+        <%- if user.super%>
+          <%- form_for User.first, :url => admin_password_reset_path, :html => {:method=>:post} do |f| %>
+        New password:<input type="text" name="password" />
+        <input type="submit" value="reset"/>
+          <%- end%>
+        <%- end%>
+      </ul>
+      <%- end%>
+    </div>
+    <div id="content" class="column-right">
+        <%- unless flash[:notice].blank?%>
+          <p class="errors">
+            <%= flash[:notice] %>
+          </p>
+        <%-end%>
+      
+      <%= yield :main_canvas %>
+    </div>
+    <div class="clearing"></div>
+
+  </div>
+
+<div class="clearing"></div>
+<div id="footer" class="clear">
+  <div class="footer-box">
+   
+ </div>
+</div>
+</div>
+</body>
+</html>

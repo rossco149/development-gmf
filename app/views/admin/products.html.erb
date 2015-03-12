@@ -1,0 +1,21 @@
+<%- content_for :main_canvas do %>
+  <h2>Products</h2>
+
+  <p>
+  <h5>Using the options below you can create, edit and delete products that are shown on the main site.</h5>
+  </p>
+
+  <div id="fireplace_list">
+    <ul>
+      <li>
+        <%= link_to "Create new product", admin_edit_fireplace_path, :title=>"Create a new product" %>
+      </li>
+    </ul>
+
+    <%- data = ["All"];Collection.masters.each{|c|data << [c.name, c.id]; c.children.each{|ci|data << ["--  "+ci.name, ci.id]}}%>
+    <p>Filter by type: <%= select_tag "fireplace_filter", options_for_select(data), :path=>admin_products_path%> </p>
+
+    <%= render :partial => "admin/fireplace_listing", :locals => {:fireplaces => @fireplaces} %>
+  </div>
+
+<%- end%>

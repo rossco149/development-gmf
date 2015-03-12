@@ -1,0 +1,26 @@
+<%- content_for :main_canvas do %>
+
+<h2>Quotes</h2>
+
+    <p>
+      <h5>Many of our clients like to ackowledge our high quality of work by saying nice things about us, below is some quotes from
+        both trade and private clients.
+      </h5>
+    </p>
+
+    <%- if @quotes.blank?%>
+      We will bring some quotes to you shortly
+    <%- else %>
+      
+      <%- @quotes.each do |quote|%>
+          <blockquote>
+            <p><%= quote.quote_text %></p>
+            <span><%= quote.customer_name%>, <%= quote.quote_type%> client.</span>
+          </blockquote>
+      <%- end %>
+      
+    <%- end%>
+
+    
+
+<%- end %>
