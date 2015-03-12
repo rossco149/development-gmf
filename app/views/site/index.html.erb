@@ -13,25 +13,18 @@
                <!-- <div class="home_banners"><strong><%= banner.description  %></strong></div> -->
             </li>
             <%- end%>
-            <div class="home_banners"><h4>Since 1890, George McAlpine has been a family business crafting and installing fireplaces. During this time, we have established an excellent reputation for our high standard of workmanship. </h4></div>
-
           <%- else%>
             <li>
                <%= image_tag "banner.jpg", :width=> "675", :height => "267", :alt => "Wall mounted fireplace", :title=>"Wall mounted fireplace"%>
             </li>
-			<div class="home_banners"><h4>Since 1890, George McAlpine has been a family business crafting and installing fireplaces. During this time, we have established an excellent reputation for our high standard of workmanship. </h4></div>
+			
 		  <%- end%>
         </ul>
+		<div class="home_banners"><h4>Since 1890, George McAlpine has been a family business crafting and installing fireplaces. During this time, we have established an excellent reputation for our high standard of workmanship. </h4></div>
+			
       </div>
   <div id="content">
-	<p><%= @banners.size %></p>
-      <!--
-      <p>
-        <h5>Since 1890, George McAlpine has been a family business crafting and installing fireplaces.
-            During this time, we have established an excellent reputation for our high standard of workmanship.
-        </h5>
-      </p>
-      -->
+
       <p>
       <h5>
         Within our showroom we have an extensive selection of marble, sandstone, limestone, slate, granite, wood, cast iron and hole in the wall unit fireplaces, ranging from traditional to contemporary styles and offered in a wide choice of finishes and sizes.
