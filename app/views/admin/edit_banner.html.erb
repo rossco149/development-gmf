@@ -8,7 +8,7 @@
     <p>
     <%- unless @banner.new_record?%>
         <div>
-          <%= link_to "Delete this banner", admin_delete_banner_path(@banner), :title=>"Delete banner", :confirm=>"Are you sure you want to delete this banner?" %>
+          <%= link_to "Delete this banner", "/admin/delete_banner/#{@banner.id}", :title=>"Delete banner", :confirm=>"Are you sure you want to delete this banner?" %>
         </div>
       <%- end%>
     </p>
@@ -16,15 +16,16 @@
        <%- unless @banner.errors.blank? %>
       <p class="errors">
         <%- @banner.errors.each do |e|%>
-          <%= e.first.gsub("_","  ")%> <%= e.last%> <br />
+            <%= e.to_s.gsub("_"," ")%> <%= @banner.errors.messages[e][0] %><br />
+        
         <%- end -%>
       </p>
       <%- end %>
 
   <fieldset>
     <legend>Enter the details required for this banner.</legend>
-  <%- form_for @banner, :url => admin_update_banner_path, :html => {:multipart => true, :method=>:post} do |f| %>
-    <%= hidden_field_tag "banner_id", @banner.id %>
+  <%= form_for @banner, :url => banner_save_path, :html => {:multipart => true, :method=>:post} do |f| %>
+  <%= hidden_field_tag "banner_id", @banner.id %>
     <div>
       <%= f.label :name %>
     </div>

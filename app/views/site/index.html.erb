@@ -19,10 +19,12 @@
             <li>
                <%= image_tag "banner.jpg", :width=> "675", :height => "267", :alt => "Wall mounted fireplace", :title=>"Wall mounted fireplace"%>
             </li>
-          <%- end%>
+			<div class="home_banners"><h4>Since 1890, George McAlpine has been a family business crafting and installing fireplaces. During this time, we have established an excellent reputation for our high standard of workmanship. </h4></div>
+		  <%- end%>
         </ul>
       </div>
   <div id="content">
+	<p><%= @banners.size %></p>
       <!--
       <p>
         <h5>Since 1890, George McAlpine has been a family business crafting and installing fireplaces.
@@ -43,7 +45,7 @@
       </p>
 
       <p>
-        Call in and see our <%= link_to "Seaward Street showroom.", contact_path(:show=>"map"), :title=>"visit our showroom"%>
+        Call in and see our <%= link_to "Seaward Street showroom.", site_contact_path(:show=>"map"), :title=>"visit our showroom"%>
       </p>
       <h3>George McAlpine:</h3>
       <h4>a name synonymous with quality.</h4>

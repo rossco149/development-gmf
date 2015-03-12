@@ -1,14 +1,14 @@
 <ul>
    	<li class=<%=selected_top_navigation(@active_path, "index")%>>
-          <%= link_to "Home", root_path, :title=>"Home"%>
+          <%= link_to "Home", site_path, :title=>"Home"%>
         </li>
         <li class=<%=selected_top_navigation(@active_path, "collection")%>>
-          <%= link_to "Collections", gallery_path, :title=>"Our collections"%>
+          <%= link_to "Collections", site_gallery_path, :title=>"Our collections"%>
         </li>
 	<li class=<%=selected_top_navigation(@active_path, "advice")%>>
-          <%= link_to "Advice", advice_path, :title=>"Advice"%>
+          <%= link_to "Advice", site_advice_path, :title=>"Advice"%>
         </li>
 	<li class=<%=selected_top_navigation(@active_path, "contact")%>>
-          <%= link_to "Contact", contact_path, :title=>"Contact"%>
+          <%= link_to "Contact", site_contact_path, :title=>"Contact"%>
         </li>
 </ul>

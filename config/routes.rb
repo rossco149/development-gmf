@@ -1,104 +1,66 @@
-ActionController::Routing::Routes.draw do |map|
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+Rails.application.routes.draw do
   
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+  get "site/gallery" => "site#gallery"
+  get "site/gallery_item/:id" => "site#gallery_show"
+  get "site/gallery/:type" => "site#gallery"
+  get "site/gallery/:type/:featured" => "site#gallery"
+  get "site/clients" => "site#clients"
+  get "site/advice" => "site#advice"
+  get "site/what_people_say" => "site#whatpeoplesay"
+  get "site/contact" => "site#contact"
+  post "site/contact" => "site#contact"
+  get "site/contact/:product" => "site#contact"
+  post "site/contact/:product" => "site#contact"
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-
-
-  map.gallery "site/gallery", :controller => "site", :action=>"gallery"
-  map.gallery_show "site/gallery_item/:id", :controller => "site", :action=>"gallery_show"
-  map.gallery_type "site/gallery/:type", :controller => "site", :action=>"gallery"
-  map.gallery_type_featured "site/gallery/:type/:featured", :controller => "site", :action=>"gallery"
-  map.clients "site/clients", :controller => "site", :action=>"clients"
-  map.advice "site/advice", :controller => "site", :action=>"advice"
-  map.what_people_say "site/what_people_say", :controller => "site", :action=>"whatpeoplesay"
-  map.contact "site/contact", :controller => "site", :action=>"contact"
-  map.contact_product "site/contact/:product", :controller => "site", :action=>"contact"
-
-  map.fireplace_image "images/:id/:size/image.gif", :controller => "site", :action => "fireplace_image"
+  get "images/:id/:size/image.gif" => "site#fireplace_image"
 
   #admin sections-----------------
-  map.admin_login "admin", :controller => "admin", :action=>"login"
-  map.admin_login "admin/login", :controller => "admin", :action=>"login"
-  map.admin_logout "admin/logout", :controller => "admin", :action=>"logout"
-  map.admin_overview "admin/overview", :controller => "admin", :action=>"overview"
-  map.admin_banner "admin/banners", :controller => "admin", :action=>"banners"
+  get "admin" => "admin#login"
+  get "admin/login" => "admin#login"
+  post "admin/login" => "admin#login"
+  get "admin/logout" => "admin#logout"
+  get "admin/overview" => "admin#overview"
+  get "admin/banners" => "admin#banners"
 
   #banners
-  map.admin_edit_banner "admin/edit_banner/:id/", :controller => "admin", :action=>"edit_banner"
-  map.admin_delete_banner "admin/delete_banner/:id", :controller => "admin", :action=>"delete_banner"
-  map.admin_update_banner '/banner/save', :controller => "admin", :action => "update_banner", :conditions => {:method => :post}
-
+  get "admin/edit_banner/:id/" => "admin#edit_banner"
+  get "admin/edit_banner/" => "admin#edit_banner"
+  get "admin/delete_banner/:id" => "admin#delete_banner"
+  post "/banner/save" => "admin#update_banner"
 
   #collections
-  map.admin_edit_collection "admin/edit_collection/:id/", :controller => "admin", :action=>"edit_collection"
-  map.admin_delete_collection "admin/delete_collection/:id", :controller => "admin", :action=>"delete_collection"
-  map.admin_create_child_category "admin/edit_collection/:id/create_sub", :create_child=>true, :controller => "admin", :action=>"edit_collection"
-  map.admin_update_collection '/collection/save', :controller => "admin", :action => "update_collection", :conditions => {:method => :post}
-  map.admin_update_order '/collection/order/:id/:move', :controller => "admin", :action => "reorder_collection"
+  get "admin/edit_collection" => "admin#edit_collection"
+  get "admin/edit_collection/:id" => "admin#edit_collection"
+  get "admin/delete_collection/:id" => "admin#delete_collection"
+  get "admin/edit_collection/:id/create_sub/:create_child" => "admin#edit_collection" #:create_child=>true => 
+  post "/collection/save" => "admin#update_collection", :conditions => {:method => :post}
+  get "/collection/order/:id/:move" => "admin#reorder_collection"
 
   #fireplaces/products
-  map.admin_products "admin/products", :controller => "admin", :action=>"products"
-  map.admin_edit_fireplace "admin/edit_fireplace", :controller => "admin", :action=>"edit_fireplace"
-  map.admin_delete_fireplace "admin/delete_fireplace/:id", :controller => "admin", :action=>"delete_fireplace"
-  map.admin_update_fireplace '/fireplace/save', :controller => "admin", :action => "update_fireplace", :conditions => {:method => :post}
+  get "admin/products" => "admin#products"
+  get "admin/edit_fireplace" => "admin#edit_fireplace"
+  get "admin/delete_fireplace/:id" => "admin#delete_fireplace"
+  post '/fireplace/save' => "admin#update_fireplace"
 
   #enquiries
-  map.admin_enquiries "admin/enquiries", :controller => "admin", :action=>"enquiries"
-  map.admin_enquiries_show "admin/enquiries/:id", :controller => "admin", :action=>"enquiries"
-  map.admin_delete_enquiry "admin/delete_enquiry/:id", :controller => "admin", :action=>"delete_enquiry"
+  get "admin/enquiries" => "admin#enquiries"
+  get "admin/enquiries/:id" => "admin#enquiries"
+  get "admin/delete_enquiry/:id" => "admin#delete_enquiry"
 
   #quotes - not currently used
-  map.admin_quotes "admin/quotes", :controller => "admin", :action=>"quotes"
-  map.admin_edit_quote "admin/edit_quote", :controller => "admin", :action=>"edit_quote"
-  map.admin_delete_quote "admin/delete_quote/:id", :controller => "admin", :action=>"delete_quote"
-  map.admin_update_quote '/quote/save', :controller => "admin", :action => "update_quote", :conditions => {:method => :post}
+  get "admin/quotes" => "admin#quotes"
+  get "admin/edit_quote" => "admin#edit_quote"
+  get "admin/delete_quote/:id" => "admin#delete_quote"
+  post '/quote/save' => "admin#update_quote"
 
-  map.admin_password_reset '/password_reset', :controller => "admin", :action => "reset_password", :conditions => {:method => :post}
+  post '/password_reset' => "admin#reset_password"
 
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 
-  map.mark '/mark', :controller => 'site', :action=>'mark'
+  get "site" => "site#index"
+  get "/" => "site#index"
 
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-
-  map.root :controller => "site", :only => :index
-
-  map.missing "*missing", :controller => 'site', :action=>'index'
+  get "*missing" => 'site#index'
 
 end

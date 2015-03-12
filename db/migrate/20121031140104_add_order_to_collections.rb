@@ -1,8 +1,8 @@
 class AddOrderToCollections < ActiveRecord::Migration
   def self.up
     add_column :collections, :nav_order, :integer
-
-    count = 1
+    
+	count = 1
     Collection.masters.each do |master|
       
       master.nav_order = count
@@ -17,6 +17,7 @@ class AddOrderToCollections < ActiveRecord::Migration
       master.save
       count += 1
     end
+	
   end
 
   def self.down

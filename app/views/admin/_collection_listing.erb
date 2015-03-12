@@ -27,10 +27,10 @@
         <p><%= cl.show_on_site ? "Yes" :"No"%> </p>
       </td>
       <td>
-        <p><%= cl.nav_order >1 ? link_to("Down", admin_update_order_path(cl,0)) : link_to("Up", admin_update_order_path(cl,1))%> </p>
+        <p><%= cl.nav_order >1 ? link_to("Down", "/collection/order/#{cl.id}/0") : link_to("Up", "/collection/order/#{cl.id}/1")%> </p>
       </td>
       <td>
-        <%= link_to "Delete collection", admin_delete_collection_path(cl), :title=>"Delete collection", :confirm=>"Are you sure you want to delete this collection - all children will be lost!" %>
+        <%= link_to "Delete collection", "/admin/delete_collection/#{cl.id}", :title=>"Delete collection", :confirm=>"Are you sure you want to delete this collection - all children will be lost!" %>
       </td>
 
   </tr>

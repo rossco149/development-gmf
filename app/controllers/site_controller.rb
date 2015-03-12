@@ -16,7 +16,7 @@ class SiteController < ApplicationController
         end
         redirect_to '/'
       end
-      @banners = Homebanner.on_site(true).limit(5)
+      @banners = Homebanner.on_site(true).by_limit(5)
   end
 
 
@@ -42,7 +42,6 @@ class SiteController < ApplicationController
         render :template => "site/gallery_sub_level" and return
       elsif @collection and @collection.show_on_site and @collection.products.length > 0
           @products = Product.by_collection(@collection).paginate(:page => params[:page], :per_page => 12)
-
           render :template => "site/gallery_listing" and return
       end
     end
@@ -50,7 +49,7 @@ class SiteController < ApplicationController
   end
 
   def gallery_show
-    @product = Product.find(params[:id], :conditions=>["show_on_site=?",true]) rescue nil
+    @product = Product.where("id = ? AND show_on_site=?",params[:id], true).first rescue nil
   end
 
   #def gallery
@@ -83,8 +82,8 @@ class SiteController < ApplicationController
     @contact.textcaptcha
     
     unless params[:contact].blank?
-
-      @contact.attributes = params[:contact]
+	  @contact = Contact.new(contact_params)
+      #@contact.attributes = params[:contact]
       @contact.created = DateTime.now
       if @contact.save
         @show = nil
@@ -101,6 +100,10 @@ class SiteController < ApplicationController
   def display_quotes
     @trade_quote = Quote.by_type("trade").first
     @private_quote = Quote.by_type("private").first
+  end
+  
+  def contact_params
+    params.require(:contact).permit(:fire_type, :callback_method, :textcaptcha_key, :textcaptcha_answer, :name, :address, :enquiry, :phone, :email)
   end
 
   def active_page

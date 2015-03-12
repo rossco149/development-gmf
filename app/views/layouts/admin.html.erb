@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Development - admin </title>
+<title>George Mcalpine - admin area </title>
 <%= stylesheet_link_tag "styles" %>
 <%=javascript_include_tag "jquery-1.4.3.min.js", "application.js" %>
 </head>
@@ -10,7 +10,7 @@
 <div id="wrapper">
 
   <div id="top" class="clear">
-    <h1><%= link_to "George&nbsp;McAlpine", "#", :title=>"Home" %>Established 1890</h1>
+    <h1><%= link_to "George McAlpine", "#", :title=>"Home" %>Established 1890</h1>
     <%= render :partial=>"admin/top_navigation" unless session[:user_id].blank?%>
   </div>
 

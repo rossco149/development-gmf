@@ -1,12 +1,12 @@
 <%- @collections.each do |cl|%>
   <ul>
     <li>
-      <%= link_to cl.name, gallery_type_path(cl), :title=>"View #{cl.name}", :class=>"master"%>
+      <%= link_to cl.name, "/site/gallery/#{cl.id}", :title=>"View #{cl.name}", :class=>"master"%>
       <%- if cl.children.length > 0%>
       <ul>
         <%- cl.children.on_site(true).each do |child|%>
         <li>
-          <%= link_to child.name, gallery_type_path(child), :title=>"View #{child.name}" %>
+          <%= link_to child.name, "/site/gallery/#{child.id}", :title=>"View #{child.name}" %>
         </li>
         <%- end%>
       </ul>
@@ -20,8 +20,8 @@
   <li>
     <h4>Find Us</h4>
     <ul>
-                <li><%= link_to "Contact us", contact_path(:show=>"form"), :title=>"View contact form"%> </li>
-                <li><%= link_to "Visit us", contact_path(:show=>"map"), :title=>"View location map"%></li>
+                <li><%= link_to "Contact us", site_contact_path(:show=>"form"), :title=>"View contact form"%> </li>
+                <li><%= link_to "Visit us", site_contact_path(:show=>"map"), :title=>"View location map"%></li>
                 <li>Telephone: 0141 420 1392</li>
                 <li>Fax: 0141 420 3906</li>
         </ul>

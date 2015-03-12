@@ -16,7 +16,9 @@
     <table>
           <%- products.each_with_index do |prod, index|%>
 
-          <%=  "<tr>" if (index % 3) == 0 %>
+          <%-if (index % 3) == 0 %>
+			<tr>
+		  <%- end %>
 
             <td>
               <%- fp = prod%>
@@ -27,13 +29,15 @@
                 <%- end%>
               <%- end%>
               <%-unless fp.class.name=="Collection"%>
-                <%= link_to image_tag(fp.image.url(:small)), show_products ? gallery_show_path(prod) : gallery_type_path(prod), :title=>"#{prod.name}. Description: #{prod.description}"%>
+                <%= link_to image_tag(fp.image.url(:small)), show_products ? "/site/gallery_item/#{prod.id}" : "/site/gallery/#{prod.id}", :title=>"#{prod.name}. Description: #{prod.description}"%>
              <%- end%>
                 
-              <p><a title="<%=prod.description %>">More: <%=link_to prod.name,show_products ? gallery_show_path(prod) : gallery_type_path(prod) %></a> </p>
+              <p><a title="<%=prod.description %>">More: <%=link_to prod.name,show_products ? "/site/gallery_item/#{prod.id}" : "/site/gallery/#{prod.id}" %></a> </p>
             </td>
 
-          <%=  "</tr>" if (index % 3) == 2  or index == products.length %>
+          <%- if (index % 3) == 2  or index == products.length %>
+			</tr>
+		  <%- end %>
 
         <%- end%>
     </table>

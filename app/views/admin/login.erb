@@ -7,7 +7,7 @@
   <p><%= flash[:error]%> </p>
   <fieldset>
     <legend>User details</legend>
-  <%- form_for @user, :url => admin_login_path do |f| %>
+  <%= form_for @user, :url => admin_login_path do |f| %>
     <p>
       <%= f.label :username %>
       <%= f.text_field :username, :size=>42 %>

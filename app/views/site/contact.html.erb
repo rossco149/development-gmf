@@ -34,13 +34,14 @@
       <%- unless @contact.errors.blank? %>
       <p class="errors">
         <%- @contact.errors.each do |e|%>
-          <%= e.first.gsub("_"," ")%> <%= e.last%> <br />
+			
+          <%= e.to_s.gsub("_"," ")%> <%= @contact.errors.messages[e][0] %><br />
         <%- end -%>
       </p>
       <%- end %>
   <fieldset>
     <legend>Enter your enquiry details and we will respond to you as soon as possible.</legend>
-  <%- form_for @contact, :url => contact_path, :html => {:method=>:post} do |f| %>
+  <%= form_for @contact, :url => site_contact_path, :html => {:method=>:post} do |f| %>
 
     <div>
       <%= f.label :name %>
@@ -96,7 +97,7 @@
         </div>
     </fieldset>
 
-    <%- textcaptcha_fields(f) do %>
+    <%=	 textcaptcha_fields(f) do %>
       <fieldset>
         <legend>Please complete the following question, used to detect SPAM.</legend>
         <div>

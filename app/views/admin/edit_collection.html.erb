@@ -21,7 +21,7 @@
 
   <fieldset>
     <legend>Enter the details required for the collection.</legend>
-  <%- form_for @collection, :url => admin_update_collection_path, :html => {:method=>:post} do |f| %>
+  <%= form_for @collection, :url => "/collection/save", :html => {:method=>:post} do |f| %>
     <%= hidden_field_tag "collection_id", @collection.id %>
     <%- if not @master_collection.blank?%>
       <%= hidden_field_tag "collection[master_collection]",  @master_collection.id %>
@@ -55,7 +55,7 @@
         <%= render :partial => "admin/collection_listing", :locals => {:collections => @collection.children} %>
 
         <p>
-           <%= link_to "Create new 'sub category'", admin_create_child_category_path(@collection), :title=>"Create a new 'sub category'" %>
+           <%= link_to "Create new 'sub category'", "/admin/edit_collection/#{@collection.id}/create_sub/true", :title=>"Create a new 'sub category'" %>
         </p>
 
       <%- end %>

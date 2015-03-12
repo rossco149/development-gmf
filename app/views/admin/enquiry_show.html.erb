@@ -2,7 +2,7 @@
   <h2>View Contact Enquiry</h2>
 
   <p>
-     <%= link_to "Delete this enquiry", admin_delete_enquiry_path(@contact), :title=>"Delete enquiry", :confirm=>"Are you sure you want to delete this enquiry?" %>
+     <%= link_to "Delete this enquiry", "/admin/delete_enquiry/#{@contact.id}", :title=>"Delete enquiry", :confirm=>"Are you sure you want to delete this enquiry?" %>
   </p>
 
   <p>

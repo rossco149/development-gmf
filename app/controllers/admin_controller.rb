@@ -99,7 +99,7 @@ class AdminController < ApplicationController
   end
 
   def banners
-    @banners = Homebanner.find(:all, :order=>"show_on_site desc")
+    @banners = Homebanner.all.order("show_on_site desc")
   end
 
   def edit_collection
@@ -118,18 +118,20 @@ class AdminController < ApplicationController
   def update_collection
     @error = true
     @collection = Collection.find(params[:collection_id]) rescue Collection.new
-
-    @collection.attributes = params[:collection]
-
-    if @collection.new_record?
-      if @collection.master_collection.blank?
-        @collection.nav_order = Collection.masters.length + 1
+	masters = Collection.masters.length
+	
+    @collection.update_attributes(collection_params)
+	
+    if @collection.new_record? or @collection.nav_order.blank?
+	  if @collection.master_collection.blank?
+		
+        @collection.nav_order = masters + 1
       else
         @collection.nav_order = Collection.by_master(Collection.find(@collection.master_collection)).length + 1
       end
     end
-
-    if @collection.save
+	
+	if @collection.save
       @error = false
       flash[:notice] = @collection.name+" saved successfully"
       redirect_to admin_edit_collection_path(:id => @collection) and return
@@ -155,27 +157,39 @@ class AdminController < ApplicationController
 
   def delete_banner
     br = Homebanner.find(params[:id]) rescue nil
-    unless br.blank?
+	
+	unless br.blank?
       Homebanner.destroy(br)
-      flash[:notice] = br.name+" has been deleted"
+      
+	  flash[:notice] = br.name+" has been deleted"
     end
 
-    redirect_to admin_banner_path
+    redirect_to admin_banners_path
   end
 
   def update_banner
+	puts "saving a banner"
     @error = true
-    @banner = Homebanner.find(params[:banner_id]) rescue Homebanner.new
-
-    @banner.attributes = params[:homebanner]
-
-    if @banner.save
-      @error = false
-      flash[:notice] = @banner.name+" saved successfully"
-      redirect_to admin_banner_path and return
-    else
-      render :template => "admin/edit_banner" and return
-    end
+	
+    @banner = Homebanner.find(params[:banner_id]) rescue Homebanner.new(banner_params)
+	
+	unless @banner.id.blank?
+		puts "updated attributes"
+		@banner.update_attributes(banner_params)
+	end
+	
+	begin
+		if @banner.save
+		  @error = false
+		  flash[:notice] = @banner.name+" saved successfully"
+		  puts "redirect to banners path"
+		  redirect_to admin_banners_path and return
+		else
+		  render :template => "admin/edit_banner" and return
+		end
+	rescue Exception => e  
+		render :template => "admin/edit_banner" and return
+	end
   end
 
   def edit_fireplace
@@ -196,25 +210,44 @@ class AdminController < ApplicationController
   def update_fireplace
     @error = true
     @product = Product.find(params[:product_id]) rescue Product.new(:available_materials => [])
-
-    collections = []
+	
+	puts "try upload FP"
+	puts params.inspect
+	puts @product.inspect
+    
+	collections = []
     unless params[:product][:collections].blank?
       params[:product][:collections].each do |id|
         c = Collection.find(id) rescue nil
         collections << c unless c.blank?
       end
     end
+	puts "Moving on..."
     params[:product][:collections] = collections
-    @product.attributes = params[:product]
-    
-    if @product.save
-      @error = false
-      flash[:notice] = @product.name+" saved successfully"
-      redirect_to admin_products_path and return
-    else
-      get_collection_hash
-      render :template => "admin/edit_fireplace" and return
-    end
+	puts "added collections"
+	begin
+		@product.update_attributes(product_params)
+    rescue Exception => e
+		puts "oops!"
+		puts e.message
+	end
+	puts "attempting update?"
+	@product.collections = collections
+	puts "Saving fireplace "
+    begin
+		if @product.save
+			puts "saved."
+			@error = false
+			flash[:notice] = @product.name+" saved successfully"
+			redirect_to admin_products_path and return
+		else
+			get_collection_hash
+			render :template => "admin/edit_fireplace" and return
+		end
+	rescue Exception =>e
+		puts e.message
+		render :template => "admin/edit_fireplace" and return
+	end
   end
 
 
@@ -254,18 +287,19 @@ class AdminController < ApplicationController
 
   #---------------------- enquiries
   def enquiries
+	
     if params[:id]
       @contact = Contact.find(params[:id])
       if @contact
         @contact.viewed = true
         @contact.save
-        render :template => "admin/enquiry_show" and return
+		render :template => "admin/enquiry_show" and return
       else
         flash[:notice] = "No enquiry found?"
       end
     else
-      @new_enquiries = Contact.find(:all, :conditions=>["viewed = ?", false], :order => "created asc")
-      @old_enquiries = Contact.find(:all, :conditions=>["viewed = ?", true], :order => "created desc")
+      @new_enquiries = Contact.all.where("viewed = ?", false).order("created asc")
+      @old_enquiries = Contact.all.where("viewed = ?", true).order("created desc")
     end
   end
 
@@ -287,6 +321,18 @@ class AdminController < ApplicationController
       redirect_to admin_login_path
     end
 
+  end
+  
+  def banner_params
+    params.require(:homebanner).permit(:name, :description, :show_on_site, :image)
+  end
+  
+  def product_params
+    params.require(:product).permit(:name, :description, :show_on_site, :available_materials, :featured, :collections, :image)
+  end
+  
+  def collection_params
+    params.require(:collection).permit(:master_collection, :name, :description, :show_on_site, :nav_order)
   end
 
   def get_collection_hash

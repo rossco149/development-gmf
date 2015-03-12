@@ -11,15 +11,19 @@
   <table>
   <%- fireplaces.each_with_index do |fp, index|%>
 
-    <%=  "<tr>" if (index % 3) == 0 %>
+    <%- if (index % 3) == 0 %>
+		<tr>
+	<%- end%>
 
       <td>
         <%= link_to image_tag(fp.image.url(:small)), admin_edit_fireplace_path(:id => fp), :title=>"Edit #{fp.name}"%>
         <p><%= link_to fp.name, admin_edit_fireplace_path(:id => fp), :title=>"Edit #{fp.name}"%> </p>
       </td>
 
-    <%=  "</tr>" if (index % 3) == 2  or index == Product.all.length %>
-
+    <%-  if (index % 3) == 2  or index == Product.all.length %>
+		</tr>
+	<%- end %>
+	
   <%- end%>
   </table>
 <%- end%>

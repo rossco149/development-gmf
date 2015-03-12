@@ -3,10 +3,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta content="<%= "George McAlpine: #{@description}"%>" name="description"/>
-<meta content="fireplace, stove, granite, marble, slate, Glasgow" name="keywords" />
+<meta content="fireplace, stove, granite, marble" name="keywords" />
 <title><%="George McAlpine. #{@page_title.capitalize}" %> </title>
-<%= stylesheet_link_tag "styles",  "jquery.lightbox-0.5.css", "rotator_style.css"%>
-<%=javascript_include_tag "jquery-1.4.3.min.js", "application.js", "jquery.lightbox-0.5.min.js", "bannerRotator.js" %>
+<%= stylesheet_link_tag "styles.css",  "jquery.lightbox-0.5.css", "rotator_style.css"%>
+<%=javascript_include_tag "jquery-1.4.3.min.js", "mcalpine.js", "jquery.lightbox-0.5.min.js", "bannerRotator.js" %>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAc6NTntVf1JmcPaZrC-RVhMiO7KZ9ELc&sensor=false"></script>
 
 </head>
@@ -14,7 +14,7 @@
 <div id="wrapper">
 
   <div id="top" class="clear">
-    <h1><%= link_to "George&nbsp;McAlpine", root_path, :title=>"Home"%>Established 1890</h1>
+    <h1><%= link_to "George McAlpine", "/", :title=>"Home"%>Established 1890</h1>
     <%= render :partial=>"site/top_navigation" %>
   </div>
 
